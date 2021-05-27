@@ -1,83 +1,80 @@
-import {StatusBar} from 'expo-status-bar';
 import React, {useState} from 'react';
-import {Button, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Button, FlatList, SectionList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
+import {CoefficientProvider, useCoefficient} from "./CoefficientContext";
+import MainScreen from "./Screens/MainScreen";
+import MarketScreen from "./Screens/MarketScreen";
 
 const Stack = createStackNavigator();
-const MarketScreen = (navigation) => {
-  return (
-      <View>
-        <Text>Market</Text>
-      </View>
-  );
-}
-const MainScreen = ({navigation}) => {
-  const [count, setCount] = useState(0);
-  const onMarketButtonPressed = () => {
-    navigation.navigate('Market');
-  }
-  const onImageButtonPressed = () => setCount(prevCount => prevCount + 1);
-  const onNullButtonPressed = () => setCount(prevCount => prevCount = 0)
-  return (
-      <View style={styles.container}>
-        <StatusBar style="auto"/>
-        <TouchableOpacity
-            onPress={onImageButtonPressed}>
-          <Image
-              source={require('./assets/doom_image.png')}
-              style={styles.icon}/>
-        </TouchableOpacity>
-        <Text style={styles.textTitle}>
-          Clicks count - {count}
-        </Text>
-        <TouchableOpacity
-            style={styles.buttonStyle}>
-          <Button
-              onPress={onMarketButtonPressed}
-              title="Market"
-              color="#FF8300"/>
-        </TouchableOpacity>
-        <TouchableOpacity
-            style={styles.buttonStyle}>
-          <Button
-              onPress={onNullButtonPressed}
-              color="#000000"
-              title="Null count"/>
-        </TouchableOpacity>
-      </View>
-  );
-}
+
+
 export default function App() {
-  return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Main" component={MainScreen}/>
-          <Stack.Screen name="Market" component={MarketScreen}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-  );
+    return (
+        <CoefficientProvider>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Main" component={MainScreen}/>
+                    <Stack.Screen name="Market" component={MarketScreen}/>
+                </Stack.Navigator>
+            </NavigationContainer>
+        </CoefficientProvider>
+
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon: {
-    width: 250,
-    height: 250,
-    resizeMode: 'stretch'
-  },
-  textTitle: {
-    fontWeight: 'bold',
-    fontSize: 25,
-    fontFamily: "Roboto"
-  },
-  buttonStyle: {
-    width: 200,
-    marginTop: 20
-  },
+export const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    row: {
+        flex: 1,
+        flexDirection: "row"
+    },
+    icon: {
+        width: 250,
+        height: 250,
+        resizeMode: 'stretch'
+    },
+    textTitle: {
+        fontWeight: 'bold',
+        fontSize: 25,
+        fontFamily: "Roboto"
+    },
+    buttonStyle: {
+        width: 200,
+        marginTop: 20
+    },
+    item: {
+        padding: 10,
+        fontSize: 25,
+    },
+    itemView: {
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    price: {
+        padding: 10,
+        fontSize: 25,
+    },
+    priceView: {
+        flexDirection: 'row-reverse'
+    },
+    listContainer: {
+        flex: 1,
+        paddingTop: 22,
+        backgroundColor: "#FFFFFF"
+    },
+    sectionHeader: {
+        paddingTop: 2,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 2,
+        fontSize: 14,
+        fontWeight: 'bold',
+        backgroundColor: 'rgba(247,247,247,1.0)',
+    }
 });
